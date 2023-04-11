@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "@raycast/api": "^1.49.2",
+    "progress-estimator": "^0.3.0",
     "youtube-dl-exec": "^2.4.0"
   },
   "devDependencies": {

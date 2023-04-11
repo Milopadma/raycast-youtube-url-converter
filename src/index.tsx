@@ -10,6 +10,7 @@ import {
 import { homedir } from "os";
 import { join } from "path";
 import youtubedl from "youtube-dl-exec";
+import createLogger from "progress-estimator";
 
 export default function YoutubeURLList() {
   const items = [
@@ -53,18 +54,23 @@ async function convertAndSave(url: string) {
   const filename = `video_${Date.now()}.mp3`;
 
   // use youtube-dl-exec
-  const youtubeDl = youtubedl(url, {
-    output: join(outputDir, filename),
-    extractAudio: true,
-    audioFormat: "mp3",
-    audioQuality: 0,
-    noWarnings: true,
+  const promise = youtubedl("https://www.youtube.com/watch?v=6W_qHa1wq60", {
+    dumpSingleJson: true,
   });
+
+  // use progress-estimator
+  const estimate = createLogger({
+    storagePath: join(homedir(), ".progress-estimator"),
+  });
+
+  // show progress
+  const result = await estimate;
+  console.log(result);
 
   showToast(ToastStyle.Animated, "Converting YouTube video to MP3...");
 
   // conversion to complete, and show toast if success
-  youtubeDl.then((output) => {
-    console.log(output);
-  });
+  // youtubeDl.then((output) => {
+  //   console.log(output);
+  // });
 }
