@@ -10,9 +10,10 @@ import {
 } from "@raycast/api";
 import { homedir } from "os";
 import { join } from "path";
-import youtubedl from "youtube-dl-exec";
-import ytdlp from "yt-dlp";
+import { exec, create } from "youtube-dl-exec";
 import logger from "progress-estimator";
+
+const youtubedl = create("/usr/local/bin/yt-dlp");
 
 export default function YoutubeURLList() {
   const items = [
@@ -57,10 +58,15 @@ async function convertAndSave(url: string) {
 
   // use youtube-dl-exec to donwload the videos and use progress-estimator to show a progress bar
   console.log(url);
-  await youtubedl(url, {
-    output: join(outputDir, filename),
-    noWarnings: true,
-  }).then((o) => console.log("Console", o, url));
-
-  showToast(Toast.Style.Success, "YouTube video converted to MP3!");
+  try {
+    const output = await youtubedl(url, {
+      output: join(outputDir, filename),
+      extractAudio: true,
+      audioFormat: "mp3",
+      ffmpegLocation: "/usr/local/bin/ffmpeg",
+    });
+    showToast(Toast.Style.Success, "Downloaded " + filename + " from " + output.channel);
+  } catch (error) {
+    showToast(Toast.Style.Failure, "Failed to convert YouTube video to MP3!" + error);
+  }
 }
