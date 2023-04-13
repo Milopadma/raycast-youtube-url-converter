@@ -13,8 +13,8 @@
   "commands": [
     {
       "name": "index",
-      "title": "Convert to mp3",
-      "description": "Converts YouTube video URLs to mp3/wav/mp4 files and saves them locally.",
+      "title": "YouTube Convert To MP3/MP4",
+      "description": "Converts YouTube video URLs to mp3/mp4 files and saves them locally.",
       "mode": "view"
     }
   ],
