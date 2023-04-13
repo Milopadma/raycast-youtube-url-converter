@@ -1,16 +1,7 @@
-import {
-  ActionPanel,
-  CopyToClipboardAction,
-  Icon,
-  List,
-  OpenInBrowserAction,
-  showToast,
-  Toast,
-  ToastStyle,
-} from "@raycast/api";
+import { ActionPanel, CopyToClipboardAction, Icon, List, OpenInBrowserAction, showToast, Toast } from "@raycast/api";
 import { homedir } from "os";
 import { join } from "path";
-import { exec, create } from "youtube-dl-exec";
+import { create } from "youtube-dl-exec";
 import logger from "progress-estimator";
 
 const youtubedl = create("/usr/local/bin/yt-dlp");
@@ -72,8 +63,8 @@ async function convertAndSave(url: string, key: string) {
       addHeader: ["referer:youtube.com", "user-agent:googlebot"],
       // if key is mp3, then extract the audio only
       // if key is mp4, then download the video with audio
-      extractAudio: key === "mp3" ? true : false,
-      audioFormat: key === "mp3" ? "mp3" : "",
+      extractAudio: key === "mp3" ? true : undefined,
+      audioFormat: key === "mp3" ? "mp3" : undefined,
       mergeOutputFormat: key === "mp4" ? "mp4" : undefined,
       ffmpegLocation: "/usr/local/bin/ffmpeg",
       format: key === "mp4" ? "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" : undefined,
