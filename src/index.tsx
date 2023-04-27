@@ -2,7 +2,6 @@ import { ActionPanel, CopyToClipboardAction, Icon, List, OpenInBrowserAction, sh
 import { homedir } from "os";
 import { join } from "path";
 import { create } from "youtube-dl-exec";
-import logger from "progress-estimator";
 
 const youtubedl = create("/usr/local/bin/yt-dlp");
 
