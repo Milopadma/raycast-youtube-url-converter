@@ -55,6 +55,8 @@ async function convertAndSave(url: string, key: string) {
 
   // use youtube-dl-exec to donwload the videos and use progress-estimator to show a progress bar
   try {
+    // while its working, show the waiting progress Toast.Style
+    showToast(Toast.Style.Animated, "Downloading " + filename);
     await youtubedl(url, {
       output: join(outputDir, filename),
       noCheckCertificates: true,
